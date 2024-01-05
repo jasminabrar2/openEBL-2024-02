@@ -54,7 +54,7 @@ jobs:
           name: merge-files
           path: merge_output/
       
-      - name: set env vars needed to update artifact url in next job
+      - name: upload variables to artifact that is used in next job to update the url
         run: |
           IFS='/' read -ra REPO <<< "$GITHUB_REPOSITORY"
           OWNER="${REPO[0]}"
@@ -67,11 +67,25 @@ jobs:
           #ARTIFACT_URL="https://github.com/$OWNER/$REPO_NAME/actions/runs/$RUN_ID/artifacts/$ARTIFACT_ID"
           echo "Artifact URL: $ARTIFACT_URL"
 
-          echo "ARTIFACT_ID=$ARTIFACT_ID" >> $GITHUB_ENV
-          echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
-          echo "ARTIFACT_URL=$ARTIFACT_URL" >> $GITHUB_ENV
-          echo "OWNER=$OWNER" >> $GITHUB_ENV
-          echo "REPO_NAME=$REPO_NAME" >> $GITHUB_ENV
+          # echo "ARTIFACT_ID=$ARTIFACT_ID" >> $GITHUB_ENV
+          # echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
+          # echo "ARTIFACT_URL=$ARTIFACT_URL" >> $GITHUB_ENV
+          # echo "OWNER=$OWNER" >> $GITHUB_ENV
+          # echo "REPO_NAME=$REPO_NAME" >> $GITHUB_ENV
+
+          # add vars to txt file
+          echo "$ARTIFACT_ID" > url_info.txt
+          echo "$RUN_ID" >> url_info.txt
+          echo "$ARTIFACT_URL" >> url_info.txt
+          echo "$OWNER" >> url_info.txt
+          echo "$REPO_NAME" >> url_info.txt
+
+      - name: upload txt file as an artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: url-info
+          path: url_info.txt
+        
           
       # - name: update index.html with new merge artifact link
       #   run: |
@@ -95,17 +109,16 @@ jobs:
   
     needs: merge
   
-    env:
-      OWNER: ${{ needs.merge.outputs.env-vars.OWNER }}
-      REPO_NAME: ${{ needs.merge.outputs.env-vars.REPO_NAME }}
-      ARTIFACT_ID: ${{ needs.merge.outputs.env-vars.ARTIFACT_ID }}
-      RUN_ID: ${{ needs.merge.outputs.env-vars.RUN_ID }}
-  
     steps:
       - name: checkout repo content
         uses: actions/checkout@v2
         with:
           ref: gh-pages
+
+      # - name: get variables from artifact
+      #   run: |
+          
+          
   
       - name: update index.html with new merge artifact link
         run: |
