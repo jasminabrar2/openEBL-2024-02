@@ -72,15 +72,16 @@ jobs:
 
       - name: update index.html with new merge artifact link
         run: |
-          sed -i 's|URL=https://github.com/$OWNER/$REPO_NAME/actions/runs/.*|URL=https://github.com/$OWNER/$REPO_NAME/actions/runs/'"$RUN_ID"'/artifacts/'"$ARTIFACT_ID"'|' index.html
-          sed -i 's|href="https://github.com/$OWNER/$REPO_NAME/actions/runs/.*|href="https://github.com/$OWNER/$REPO_NAME/actions/runs/'"$RUN_ID"'/artifacts/'"$ARTIFACT_ID"'|' index.html
+          git checkout -b gh-pages
+          sed -i "s|URL=https://github.com/$OWNER/$REPO_NAME/actions/runs/.*|URL=https://github.com/$OWNER/$REPO_NAME/actions/runs/$RUN_ID/artifacts/$ARTIFACT_ID|" index.html
+          sed -i "s|href="https://github.com/$OWNER/$REPO_NAME/actions/runs/.*|href="https://github.com/$OWNER/$REPO_NAME/actions/runs/$RUN_ID/artifacts/$ARTIFACT_ID|" index.html
 
       # merge script always runs on any PR, the if statement ensures link is only updated after a PR is merged into SiEPIC
       - name: push changes to gh-pages branch
         run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor }}@users.noreply.github.com"
-          git checkout -b gh-pages
+          #git checkout -b gh-pages
           git add index.html
           git commit -m "Update index.html to redirect to new merge artifact url"
           git push origin gh-pages
