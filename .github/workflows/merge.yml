@@ -76,7 +76,6 @@ jobs:
           # add vars to txt file
           echo "$ARTIFACT_ID" > url_info.txt
           echo "$RUN_ID" >> url_info.txt
-          echo "$ARTIFACT_URL" >> url_info.txt
           echo "$OWNER" >> url_info.txt
           echo "$REPO_NAME" >> url_info.txt
 
