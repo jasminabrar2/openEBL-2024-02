@@ -72,7 +72,6 @@ jobs:
 
       - name: update index.html with new merge artifact link
         run: |
-          git checkout -b gh-pages
           sed -i "s|URL=https://github.com/$OWNER/$REPO_NAME/actions/runs/.*|URL=https://github.com/$OWNER/$REPO_NAME/actions/runs/$RUN_ID/artifacts/$ARTIFACT_ID|" index.html
           sed -i "s|href="https://github.com/$OWNER/$REPO_NAME/actions/runs/.*|href="https://github.com/$OWNER/$REPO_NAME/actions/runs/$RUN_ID/artifacts/$ARTIFACT_ID|" index.html
 
@@ -84,7 +83,7 @@ jobs:
           #git checkout -b gh-pages
           git add index.html
           git commit -m "Update index.html to redirect to new merge artifact url"
-          git push origin gh-pages
+          git push origin main:gh-pages
         #if: ${{ env.OWNER == 'SiEPIC'}}
           
       # - name: update url in runner README 
