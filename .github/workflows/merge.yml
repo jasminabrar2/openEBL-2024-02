@@ -73,8 +73,8 @@ jobs:
       - name: update index.html with new merge artifact link
         run: |
           echo "https://github.com/$OWNER/$REPO_NAME/actions/runs/$RUN_ID/artifacts/$ARTIFACT_ID"
-          sed -i 's|URL=https://github.com/'"$OWNER"'/'"$REPO_NAME"'/actions/runs/.*|URL=https://github.com/'"$OWNER"'/'"$REPO_NAME"'/actions/runs/33/artifacts/44|' index.html
-          sed -i 's|href="https://github.com/'"$OWNER"'/'"$REPO_NAME"'/actions/runs/.*|href="https://github.com/'"$OWNER"'/'"$REPO_NAME"'/actions/runs/33/artifacts/44|' index.html
+          sed -i 's|URL=https://github.com/'"$OWNER"'/'"$REPO_NAME"'/actions/runs/.*|URL=https://github.com/'"$OWNER"'/'"$REPO_NAME"'/actions/runs/'"$RUN_ID"'/artifacts/'"$ARTIFACT_ID"'|' index.html
+          sed -i 's|href="https://github.com/'"$OWNER"'/'"$REPO_NAME"'/actions/runs/.*|href="https://github.com/'"$OWNER"'/'"$REPO_NAME"'/actions/runs/'"$RUN_ID"'/artifacts/'"$ARTIFACT_ID"'|' index.html
           cat index.html
 
       # merge script always runs on any PR, the if statement ensures link is only updated after a PR is merged into SiEPIC
@@ -82,6 +82,7 @@ jobs:
         run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor }}@users.noreply.github.com"
+          git pull
           #git checkout -b gh-pages
           git add index.html
           git commit -m "Update index.html to redirect to new merge artifact url"
