@@ -109,6 +109,7 @@ jobs:
   
       - name: update index.html with new merge artifact link
         run: |
+          echo "owner: $OWNER"
           echo "https://github.com/$OWNER/$REPO_NAME/actions/runs/$RUN_ID/artifacts/$ARTIFACT_ID"
           sed -i 's|URL=https://github.com/'"$OWNER"'/'"$REPO_NAME"'/actions/runs/.*|URL=https://github.com/'"$OWNER"'/'"$REPO_NAME"'/actions/runs/'"$RUN_ID"'/artifacts/'"$ARTIFACT_ID"'">|' index.html
           sed -i 's|href="https://github.com/'"$OWNER"'/'"$REPO_NAME"'/actions/runs/.*|href="https://github.com/'"$OWNER"'/'"$REPO_NAME"'/actions/runs/'"$RUN_ID"'/artifacts/'"$ARTIFACT_ID"'">|' index.html
