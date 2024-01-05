@@ -84,7 +84,7 @@ jobs:
           git add index.html
           git commit -m "Update index.html to redirect to new merge artifact url"
           git push origin gh-pages
-        if: ${{ env.OWNER == 'SiEPIC'}}
+        #if: ${{ env.OWNER == 'SiEPIC'}}
           
       # - name: update url in runner README 
       #   run: |
