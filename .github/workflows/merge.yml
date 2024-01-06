@@ -59,19 +59,8 @@ jobs:
           IFS='/' read -ra REPO <<< "$GITHUB_REPOSITORY"
           OWNER="${REPO[0]}"
           REPO_NAME="${REPO[1]}"
-          echo "Owner: $OWNER"
-          echo "Repository: $REPO_NAME"
-          
           RUN_ID=${{ github.run_id }}
           ARTIFACT_ID=${{ steps.artifact-upload.outputs.artifact-id }}
-          #ARTIFACT_URL="https://github.com/$OWNER/$REPO_NAME/actions/runs/$RUN_ID/artifacts/$ARTIFACT_ID"
-          echo "Artifact URL: $ARTIFACT_URL"
-
-          # echo "ARTIFACT_ID=$ARTIFACT_ID" >> $GITHUB_ENV
-          # echo "RUN_ID=$RUN_ID" >> $GITHUB_ENV
-          # echo "ARTIFACT_URL=$ARTIFACT_URL" >> $GITHUB_ENV
-          # echo "OWNER=$OWNER" >> $GITHUB_ENV
-          # echo "REPO_NAME=$REPO_NAME" >> $GITHUB_ENV
 
           # add vars to txt file
           echo "$ARTIFACT_ID" > url_info.txt
@@ -85,23 +74,6 @@ jobs:
           name: url-info
           path: url_info.txt
         
-          
-      # - name: update index.html with new merge artifact link
-      #   run: |
-      #     echo "https://github.com/$OWNER/$REPO_NAME/actions/runs/$RUN_ID/artifacts/$ARTIFACT_ID"
-      #     sed -i 's|URL=https://github.com/'"$OWNER"'/'"$REPO_NAME"'/actions/runs/.*|URL=https://github.com/'"$OWNER"'/'"$REPO_NAME"'/actions/runs/'"$RUN_ID"'/artifacts/'"$ARTIFACT_ID"'">|' index.html
-      #     sed -i 's|href="https://github.com/'"$OWNER"'/'"$REPO_NAME"'/actions/runs/.*|href="https://github.com/'"$OWNER"'/'"$REPO_NAME"'/actions/runs/'"$RUN_ID"'/artifacts/'"$ARTIFACT_ID"'">|' index.html
-      #     cat index.html
-
-      # # merge script always runs on any PR, the if statement ensures link is only updated after a PR is merged into SiEPIC
-      # - name: push changes to gh-pages branch
-      #   run: |
-      #     git config user.name "${{ github.actor }}"
-      #     git config user.email "${{ github.actor }}@users.noreply.github.com"
-      #     git add index.html
-      #     git commit -m "Update index.html to redirect to new merge artifact url"
-      #     git push origin main:gh-pages
-      #   #if: ${{ env.OWNER == 'SiEPIC'}}
   
   update-url:
     runs-on: ubuntu-latest
@@ -119,6 +91,7 @@ jobs:
         with:
           name: url-info
           path: .
+          search_artifacts: true
 
       - name: get vars from url_info.txt file
         run: |
