@@ -81,18 +81,17 @@ jobs:
     needs: merge
   
     steps:
-      - name: checkout repo content
-        uses: actions/checkout@v2
-        with:
-          ref: gh-pages
-
       - name: download url-info artifact
         uses: actions/download-artifact@v2
         with:
           name: url-info
           path: .
-          search_artifacts: true
-
+          
+      - name: checkout repo content
+        uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+          
       - name: get vars from url_info.txt file
         run: |
           ARTIFACT_ID=$(head -1 url_info.txt)
