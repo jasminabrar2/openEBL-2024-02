@@ -81,6 +81,11 @@ jobs:
     needs: merge
   
     steps:
+      - name: List Artifacts
+        run: |
+          ls -la
+          ls -la $GITHUB_WORKSPACE
+        
       - name: download url-info artifact
         uses: actions/download-artifact@v2
         with:
