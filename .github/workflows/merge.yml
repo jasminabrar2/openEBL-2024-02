@@ -11,9 +11,6 @@ on:
 jobs:
   merge:
     runs-on: ubuntu-latest
-    
-    outputs:
-      env-vars: ${{ steps.set-env-vars.outputs.env-vars }}
 
     steps:
       - name: checkout repo content
@@ -31,7 +28,6 @@ jobs:
 
       - name: run merge script
         run: |
-
           python merge/EBeam_merge.py
 
       - name: move merge output files to new folder
@@ -47,7 +43,7 @@ jobs:
             cp "/home/runner/work/openEBL-2024-02/openEBL-2024-02/merge/$file" merge_output/
           done
 
-      - name: upload artifact
+      - name: upload merge artifact
         uses: actions/upload-artifact@v4
         id: artifact-upload
         with:
@@ -74,7 +70,7 @@ jobs:
           name: url-info
           path: url_info.txt
         
-  
+  # seperate job needed so we can check out and change code from gh-pages branch
   update-url:
     runs-on: ubuntu-latest
   
@@ -126,6 +122,6 @@ jobs:
           git add index.html
           git commit -m "Update index.html to redirect to new merge artifact url"
           git push 
-        #if: ${{ env.OWNER == 'SiEPIC'}}
+        if: ${{ env.OWNER == 'SiEPIC'}}
         
       
