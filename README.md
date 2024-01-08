@@ -57,7 +57,7 @@ The submission involves several steps. First, you need to create your design(s) 
 1) Running the files in the "submissions/KLayout Python" folder, to generate the designs
 2) Performing Manufacturing DRC verification on the designs in the "submissions" folder, and outputing the errors as an Artifact
 3) Performing Functional verification on the designs in the "submissions" folder, and outputing the errors as an Artifact
-4) Merging the designs from the "submissions" folder, and outputing merged layout as an Artifact
+4) Merging the designs from the "submissions" folder, and outputing merged layout as an Artifact.
 
 ## Latest Merge Layout File
 
