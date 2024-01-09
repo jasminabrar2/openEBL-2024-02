@@ -1,4 +1,4 @@
-name: Run Layout Verification
+name: Run Layout Verification.
 
 on:
   workflow_dispatch:
