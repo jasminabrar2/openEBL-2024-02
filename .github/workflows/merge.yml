@@ -78,6 +78,11 @@ jobs:
           # add new URL
           printf "$start_delim\n$ARTIFACT_URL\n$end_delim\n" >> README.md
 
+          echo "GitHub Actor: ${{ github.actor }}"
+          echo "GitHub Triggering Actor: ${{ github.triggering_actor }}"
+          echo "GitHub Repo Owner: ${{ github.repository_owner }}"
+          
+
       # merge script always runs on any PR, this ensures link is only updated after a PR is merged into SiEPIC
       - name: commit and push changes to README if we are in SiEPIC repo
         run: |
