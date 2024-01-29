@@ -90,7 +90,7 @@ jobs:
         run: |
         
           # Check if there is a comma in the variable
-          if [[ "$FILES" == *","* ]]; then
+          if [[ "$FILES_SINGLE_LINE" == *","* ]]; then
             # Replace the delimiter with newlines
             FILES=$(echo "$FILES_SINGLE_LINE" | tr ',' '\n')
           else
