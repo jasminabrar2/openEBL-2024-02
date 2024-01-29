@@ -15,7 +15,6 @@ jobs:
     steps:
       - name: checkout repo content
         uses: actions/checkout@v2
-        if: github.repository_owner == 'SiEPIC'
 
       - name: download verification trigger artifact
         uses: dawidd6/action-download-artifact@v2
@@ -38,6 +37,7 @@ jobs:
         # can also specify python version if needed
       - name: setup python
         uses: actions/setup-python@v4
+        if: github.repository_owner != 'SiEPIC' && env.TRIGGER_INFO != 'pull_request'
 
       - name: install python packages
         run: |
@@ -106,5 +106,4 @@ jobs:
           git add README.md
           git commit -m "update README with new artifact url $ARTIFACT_URL"
           git push
-        if: github.repository_owner == 'SiEPIC'
-        #if: env.TRIGGER_INFO != 'pull_request'
+        if: github.repository_owner == 'SiEPIC' && env.TRIGGER_INFO != 'pull_request'
