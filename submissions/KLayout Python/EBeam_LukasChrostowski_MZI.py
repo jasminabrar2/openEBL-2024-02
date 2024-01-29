@@ -8,7 +8,7 @@ Example simple script to
  - create an MZI
  - export to OASIS for submission to fabrication
 
-using SiEPIC-Tools function including connect_pins_with_waveguide and connect_cell.
+using SiEPIC-Tools function including connect_pins_with_waveguide and connect_cell
 
 Use instructions:
 
