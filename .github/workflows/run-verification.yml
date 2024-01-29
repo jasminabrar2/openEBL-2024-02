@@ -76,10 +76,28 @@ jobs:
             fi
           fi
 
-          echo "FILES=$FILES" >> $GITHUB_ENV
+          if [ $(echo "$FILES" | wc -l) -gt 1 ]; then
+            # Replace newlines with a delimiter (e.g., comma)
+            FILES_SINGLE_LINE=$(echo "$FILES" | tr '\n' ',')
+          else
+            # Keep the original content without modification
+            FILES_SINGLE_LINE="$FILES"
+          fi
+
+          echo "FILES_SINGLE_LINE=$FILES_SINGLE_LINE" >> $GITHUB_ENV
 
       - name: run layout verification
         run: |
+        
+          # Check if there is a comma in the variable
+          if [[ "$FILES" == *","* ]]; then
+            # Replace the delimiter with newlines
+            FILES=$(echo "$FILES_SINGLE_LINE" | tr ',' '\n')
+          else
+            # No comma found, keep the original content without modification
+            FILES="$FILES_SINGLE_LINE"
+          fi
+            
           # print the names of the files
           echo "Files for verification; $FILES"
 
