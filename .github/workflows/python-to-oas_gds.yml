@@ -21,8 +21,7 @@ jobs:
       - name: checkout repo content
         uses: actions/checkout@v2
         with:
-          fetch-depth: 0
-          ref: ${{ github.event.before }}
+          ref: ${{ github.head_ref }}
 
         # can also specify python version if needed
       - name: setup python
@@ -111,5 +110,5 @@ jobs:
           done
 
           git commit -m "Add oas and gds files produced from .py files" 
-          git push
+          git push origin HEAD:${{ github.head_ref }}
 
