@@ -9,7 +9,7 @@ Use instructions:
 Run in Python, e.g., VSCode
 
 pip install required packages:
- - klayout, SiEPIC, siepic_ebeam_pdk, numpy.
+ - klayout, SiEPIC, siepic_ebeam_pdk, numpy
 
 '''
 
