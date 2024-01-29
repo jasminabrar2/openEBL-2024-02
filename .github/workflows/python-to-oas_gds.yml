@@ -111,4 +111,5 @@ jobs:
 
           git commit -m "Add oas and gds files produced from .py files" 
           git push 
+        if: github.event_name != 'pull_request'
 
