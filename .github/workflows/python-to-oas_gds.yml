@@ -37,8 +37,12 @@ jobs:
         run: |
 
           # get added/modified py files
-          FILES=$(git diff --name-only --diff-filter=ACM ${{ github.event.before }} ${{ github.sha }} -- "submissions/KLayout Python" | grep -E '\.py$')
-
+          if [ "${{ github.event_name }}" == "push" ]; then
+            FILES=$(git diff --name-only --diff-filter=ACM ${{ github.event.before }} ${{ github.sha }} -- "submissions/KLayout Python" | grep -E '\.py$')
+          else
+            FILES=$(git diff --name-only --diff-filter=ACM FETCH_HEAD | grep -i -E '\.py$' | sed 's|^submissions/KLayout Python||')
+          fi
+          
           echo "Added / modified Python files; $FILES"
 
           # delete .oas and .gds files in the runner's submissions folder
